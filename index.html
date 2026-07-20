@@ -106,7 +106,7 @@
         <select id="scenario" onchange="updateTemplates()">
             <option value="dietitian_match">配對營養師</option>
             <option value="ask_time">詢問一對一分析時間</option>
-             <option value="appointment_reservation_1v1">一對一分析時間提醒</option>
+            <option value="appointment_reservation_1v1">一對一分析時間提醒</option>
         </select>
     </div>
 
@@ -162,16 +162,17 @@
             }
         ],
         appointment_reservation_1v1: [
-             { 
-                id: "at1", 
+            { 
+                id: "ar1", 
                 name: "【實體1v1提醒】", 
                 text: "{members} 好~ 🔖一對一提醒\n\n姓名：\n\n時間：\n\n營養師：\n\n地點：台北初日\n\n地址：台北市中山區民生東路二段163號4樓\n(行天宮捷運一號出口，第一銀行樓上)" 
             },
             { 
-                id: "at2", 
+                id: "ar2", 
                 name: "【線上1v1提醒】", 
                 text: "{members} 好~ 🔖一對一提醒\n\n姓名：\n\n時間：\n\n營養師：\n\n地點：線上\n\nGoogle meet：" 
             }
+        ]
     };
 
     // 初始化與更新模板下拉選單
