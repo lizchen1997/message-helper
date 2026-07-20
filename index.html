@@ -135,7 +135,7 @@
 </div>
 
 <script>
-    // 定義所有情境與模板資料
+    // 定義所有情境與模板資料 (已清除所有全形空白與非法字元)
     const templateData = {
         dietitian_match: [
             { 
@@ -181,12 +181,14 @@
         const templateSelect = document.getElementById('template');
         templateSelect.innerHTML = '';
 
-        templateData[scenario].forEach(temp => {
-            const option = document.createElement('option');
-            option.value = temp.id;
-            option.textContent = temp.name;
-            templateSelect.appendChild(option);
-        });
+        if (templateData[scenario]) {
+            templateData[scenario].forEach(temp => {
+                const option = document.createElement('option');
+                option.value = temp.id;
+                option.textContent = temp.name;
+                templateSelect.appendChild(option);
+            });
+        }
     }
 
     // 生成最終訊息
@@ -195,11 +197,9 @@
         const members = document.getElementById('members').value || "xxx";
         const templateId = document.getElementById('template').value;
 
-        // 尋找對應的模板內容
         const selectedTemplate = templateData[scenario].find(t => t.id === templateId);
         
         if (selectedTemplate) {
-            // 取代其中的 {members} 關鍵字
             const finalMessage = selectedTemplate.text.replace(/{members}/g, members);
             document.getElementById('resultText').textContent = finalMessage;
         }
