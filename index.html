@@ -113,24 +113,33 @@
         </select>
     </div>
 
-    <!-- 2. 輸入參與人員 (隨情境動態調整標籤) -->
-    <div class="form-group">
-        <label id="label-members" for="members">2. 參與人員 / 網紅 / 客戶姓名</label>
-        <input type="text" id="members" placeholder="例如：王小明" value="">
-    </div>
-
-    <!-- 2-2. 助理姓名輸入框 (預設隱藏，僅情境六顯示) -->
-    <div class="form-group" id="assistant-group" style="display: none;">
-        <label for="members2">2-2. 助理姓名 (members2)</label>
-        <input type="text" id="members2" placeholder="例如：小美" value="">
-    </div>
-
     <!-- 3. 選擇訊息語氣/模板 -->
     <div class="form-group">
-        <label for="template">3. 選擇訊息模板</label>
-        <select id="template">
+        <label for="template">2. 選擇訊息模板</label>
+        <select id="template" onchange="toggleInputFields()">
             <!-- 這裡會根據情境動態更新 -->
         </select>
+    </div>
+
+    <!-- 變數輸入區區塊 -->
+    <hr style="border: 0; border-top: 1px dashed #d1d5db; margin: 25px 0;">
+
+    <!-- 欄位一 (基礎是 members，特殊狀態是 members1) -->
+    <div class="form-group" id="group-members1">
+        <label id="label-members1" for="members1">3-1. 參與人員 / 網紅 / 客戶姓名</label>
+        <input type="text" id="members1" placeholder="例如：王小明" value="">
+    </div>
+
+    <!-- 欄位二 (助理名稱 或 網紅本名) -->
+    <div class="form-group" id="group-members2" style="display: none;">
+        <label id="label-members2" for="members2">3-2. 變數欄位二</label>
+        <input type="text" id="members2" placeholder="" value="">
+    </div>
+
+    <!-- 欄位三 (僅在線上1v1提醒出現：營養師名稱) -->
+    <div class="form-group" id="group-members3" style="display: none;">
+        <label id="label-members3" for="members3">3-3. 營養師名稱 (members3)</label>
+        <input type="text" id="members3" placeholder="例如：立慈營養師" value="">
     </div>
 
     <button class="btn" onclick="generateMessage()">✨ 生成訊息內容</button>
@@ -184,7 +193,7 @@
             { 
                 id: "ar2", 
                 name: "【線上1v1提醒】", 
-                text: "{members} 好~ \n🔖一對一提醒\n\n姓名：\n\n時間：\n\n營養師：\n\n地點：線上\n\nGoogle meet：" 
+                text: "{members1} 好~ \n🔖一對一提醒\n\n姓名：{members2}\n\n時間：\n\n營養師：{members3}\n\n地點：線上\n\nGoogle meet：" 
             }
         ],
         ask_course_guidance_time: [
@@ -201,7 +210,7 @@
             {
                 id: "cg3",
                 name: "【約網紅課程指導實體時間】",
-                text: "{members} 好~ \n課程進行到一半了，我們會安排您和營養師一對一的課程指導時間\n營養師會和您一起回顧這段時間的努力，確認目前的飲食是否需要調整，來達到我們一起訂的目標💪\n如果有任何問題也可以趁這個機會和營養師提出喔🙇\n\n時間約 15 分鐘/人\n但建議還是可以多預留一些時間比較好😊\n\n地點：台北初日\n地址：台北市中山區民生東路二段161號4樓（第一銀行樓上）\n時段如下：\n\n\n請問哪個時段方便呢？"
+                text: "{members} 好~ \n課程進行到一半了，我們會安排您和營養師一對一的課程指導時間\n營養師會和您一起回顧這段時間的努力，確認目前的飲食是否需要調整，來達到我們一起訂的目標💪\n如果有任何問題也可以趁這個機會和營養師提出喔🙇\n\n時間約 15 分鐘/人\n開課前提醒：但建議還是可以多預留一些時間比較好😊\n\n地點：台北初日\n地址：台北市中山區民生東路二段161號4樓（第一銀行樓上）\n時段如下：\n\n\n請問哪個時段方便呢？"
             },
             {
                 id: "cg4",
@@ -214,11 +223,6 @@
                 id: "pw1",
                 name: "【問卷填寫】",
                 text: "{members} 好~\n這邊提供營養師分析前的執行事項，再麻煩一對一分析前按照以下步驟完成：\n1.問卷填寫\n2.APP ID\n\n謝謝！\n\n【步驟1】\n🏷️下載 Cofit App『Cofit - 我的專屬營養師』\nApple: https://tinyurl.com/28ta4b6z\n安卓: https://goo.gl/uM0y4v\n⚠️提醒：為確保資料一致，登入APP與填寫問卷時，請使用先前提供的手機號碼，並於相關作業中皆使用同一門號。\n\n【步驟2】\n🏷️完成 Cofit APP 下載後，請填寫 2 份問卷唷！\n1️⃣飲食及生活習慣問卷：https://hi.cofit.me/6GU5p\n2️⃣六大荷爾蒙體質分析問卷：https://hi.cofit.me/fl97W\n- 請使用本人的手機號碼登入問卷系統，且不得與他人共用號碼\n- 請盡量以「真實姓名」填寫，若以其他姓名填寫也請主動跟我們說，避免營養師核對不到資料無法為您分析喔！\n- 完成問卷後請確認「提交」並務必回來跟我說，以利營養師核對唷！\n\n【步驟3】\n🏷️2 日自主飲食紀錄\n請上傳個人飲食照片至 Cofit App。 一對一分析時，營養師將會透過 App 檢視您的 2 日飲食唷！\n飲食記錄請上傳至「日記」頁面，教學影片 https://youtube.com/shorts/xDKhdt7lGyg\n⚠️小提醒：飲食記錄請上傳至「日記」頁面，不是跟營養師的對話裡喔！"
-            },
-            {
-                id: "pw2",
-                name: "【請網紅回覆ID】",
-                text: "{members} 好~\n以上資訊完成後，再請回覆APP ID呦\n謝謝！"
             }
         ],
         on_task_assistant: [
@@ -230,23 +234,12 @@
         ]
     };
 
-    // 初始化與更新模板下拉選單，並動態控制助理輸入框的顯示
+    // 初始化與更新模板下拉選單
     function updateTemplates() {
         const scenario = document.getElementById('scenario').value;
         const templateSelect = document.getElementById('template');
-        const labelMembers = document.getElementById('label-members');
-        const assistantGroup = document.getElementById('assistant-group');
         
         templateSelect.innerHTML = '';
-
-        // 如果是情境六，調整標籤並開啟第二個變數輸入框
-        if (scenario === 'on_task_assistant') {
-            labelMembers.textContent = "2. 網紅 / 營養師姓名 (members1)";
-            assistantGroup.style.display = 'block';
-        } else {
-            labelMembers.textContent = "2. 參與人員 / 網紅 / 客戶姓名";
-            assistantGroup.style.display = 'none';
-        }
 
         if (templateData[scenario]) {
             templateData[scenario].forEach(temp => {
@@ -256,24 +249,66 @@
                 templateSelect.appendChild(option);
             });
         }
+        
+        // 每次情境大換，都要重新確認輸入欄位的顯示狀態
+        toggleInputFields();
+    }
+
+    // 依據當前選取的「情境」與「模板」動態調整輸入框的標籤與顯示狀態
+    function toggleInputFields() {
+        const scenario = document.getElementById('scenario').value;
+        const templateId = document.getElementById('template').value;
+        
+        const label1 = document.getElementById('label-members1');
+        const label2 = document.getElementById('label-members2');
+        
+        const group2 = document.getElementById('group-members2');
+        const group3 = document.getElementById('group-members3');
+        
+        const input2 = document.getElementById('members2');
+
+        // 狀態重置：預設隱藏欄位二與欄位三
+        group2.style.display = 'none';
+        group3.style.display = 'none';
+        label1.textContent = "3-1. 參與人員 / 網紅 / 客戶姓名";
+
+        // 分支判斷
+        if (scenario === 'on_task_assistant') {
+            label1.textContent = "3-1. 網紅 / 營養師姓名 (members1)";
+            label2.textContent = "3-2. 助理姓名 (members2)";
+            input2.placeholder = "例如：小美";
+            group2.style.display = 'block';
+            
+        } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar2') {
+            label1.textContent = "3-1. 網紅名稱 (members1)";
+            label2.textContent = "3-2. 網紅本名 (members2)";
+            input2.placeholder = "例如：陳大明";
+            group2.style.display = 'block';
+            group3.style.display = 'block';
+        }
     }
 
     // 生成最終訊息
     function generateMessage() {
         const scenario = document.getElementById('scenario').value;
-        const members1 = document.getElementById('members').value || "xxx";
-        const members2 = document.getElementById('members2').value || "xxx";
         const templateId = document.getElementById('template').value;
+        
+        const members1 = document.getElementById('members1').value || "xxx";
+        const members2 = document.getElementById('members2').value || "xxx";
+        const members3 = document.getElementById('members3').value || "xxx";
 
         const selectedTemplate = templateData[scenario].find(t => t.id === templateId);
         
         if (selectedTemplate) {
             let finalMessage = selectedTemplate.text;
             
-            // 處理雙變數或單變數替換
             if (scenario === 'on_task_assistant') {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
+            } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar2') {
+                finalMessage = finalMessage.replace(/{members1}/g, members1);
+                finalMessage = finalMessage.replace(/{members2}/g, members2);
+                finalMessage = finalMessage.replace(/{members3}/g, members3);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
             }
