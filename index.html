@@ -109,13 +109,20 @@
             <option value="appointment_reservation_1v1">一對一分析時間提醒</option>
             <option value="ask_course_guidance_time">詢問課程指導時間</option>
             <option value="prep_work_1v1">一對一分析事前作業</option>
+            <option value="on_task_assistant">on task給助理</option>
         </select>
     </div>
 
-    <!-- 2. 輸入參與人員 -->
+    <!-- 2. 輸入參與人員 (隨情境動態調整標籤) -->
     <div class="form-group">
-        <label for="members">2. 參與人員 / 網紅 / 客戶姓名</label>
+        <label id="label-members" for="members">2. 參與人員 / 網紅 / 客戶姓名</label>
         <input type="text" id="members" placeholder="例如：王小明" value="">
+    </div>
+
+    <!-- 2-2. 助理姓名輸入框 (預設隱藏，僅情境六顯示) -->
+    <div class="form-group" id="assistant-group" style="display: none;">
+        <label for="members2">2-2. 助理姓名 (members2)</label>
+        <input type="text" id="members2" placeholder="例如：小美" value="">
     </div>
 
     <!-- 3. 選擇訊息語氣/模板 -->
@@ -137,7 +144,7 @@
 </div>
 
 <script>
-    // 定義所有情境與模板資料 (已整合情境五，清除影響運作的非法字元)
+    // 定義所有情境與模板資料
     const templateData = {
         dietitian_match: [
             { 
@@ -145,7 +152,7 @@
                 name: "【詢問國內網紅一對一分析資料】", 
                 text: "{members} 好~\n我們將安排營養師進行一對一分析以及合約製作\n請您提供以下資訊，以便我們進行後續的作業：\n• 本名：\n• 手機號碼：\n⚠️請提供本人使用的手機號碼，後續資料將綁定此門號，請於問卷及 APP 登入使用相同號碼。\n• 本人常用 Email（系統通知使用）：\n• 合約收件 Email（如同上可免填）：\n•勞報/開立發票（如開發票請提供公司名）：\n\n因後續將提供保健品，預計會在開課前寄出，所以寄送的收件資訊也同步麻煩了!\n\n• 收件人：\n• 收件地址：\n• 收件電話：\n\n以上再麻煩了，感謝!" 
             },
-             { 
+            { 
                 id: "dm2", 
                 name: "【詢問國外網紅一對一分析資料】", 
                 text: "{members} 好~\n\n我們將安排營養師進行一對一分析以及合約製作\n請您提供以下資訊，以便我們進行後續的作業：\n• 本名：\n• 國外手機號碼：\n⚠️請提供本人使用的手機號碼，後續資料將綁定此門號，請於問卷及 APP 登入使用相同號碼。\n• 本人常用 Email（系統通知使用）：\n• 合約收件 Email（如同上可免填）：\n•勞報/開立發票（如開發票請提供公司名）：\n\n以上再麻煩了，感謝!" 
@@ -160,7 +167,7 @@
             { 
                 id: "at2", 
                 name: "【營養師線上時間】", 
-                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n請問x/x ~ x/x 前是否有可以線上一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n可預約時段：如 x/xx  14:00-17:00 (結束時間)💕\n\n需避開時段：\n\n特殊需求 (如完全不可遲到、許願哪日優先安排)： 
+                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n請問x/x ~ x/x 前是否有可以線上一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n可預約時段：如 x/xx  14:00-17:00 (結束時間)💕\n\n需避開時段：\n\n特殊需求 (如完全不可遲到、許願哪日優先安排)：" 
             },
             { 
                 id: "at3", 
@@ -213,14 +220,33 @@
                 name: "【請網紅回覆ID】",
                 text: "{members} 好~\n以上資訊完成後，再請回覆APP ID呦\n謝謝！"
             }
+        ],
+        on_task_assistant: [
+            {
+                id: "ota1",
+                name: "【進團班】",
+                text: "【 KOL {members1} _進團班】 麻煩 {members2}，謝謝！\n進班資訊網址："
+            }
         ]
     };
 
-    // 初始化與更新模板下拉選單
+    // 初始化與更新模板下拉選單，並動態控制助理輸入框的顯示
     function updateTemplates() {
         const scenario = document.getElementById('scenario').value;
         const templateSelect = document.getElementById('template');
+        const labelMembers = document.getElementById('label-members');
+        const assistantGroup = document.getElementById('assistant-group');
+        
         templateSelect.innerHTML = '';
+
+        // 如果是情境六，調整標籤並開啟第二個變數輸入框
+        if (scenario === 'on_task_assistant') {
+            labelMembers.textContent = "2. 網紅 / 營養師姓名 (members1)";
+            assistantGroup.style.display = 'block';
+        } else {
+            labelMembers.textContent = "2. 參與人員 / 網紅 / 客戶姓名";
+            assistantGroup.style.display = 'none';
+        }
 
         if (templateData[scenario]) {
             templateData[scenario].forEach(temp => {
@@ -235,13 +261,23 @@
     // 生成最終訊息
     function generateMessage() {
         const scenario = document.getElementById('scenario').value;
-        const members = document.getElementById('members').value || "xxx";
+        const members1 = document.getElementById('members').value || "xxx";
+        const members2 = document.getElementById('members2').value || "xxx";
         const templateId = document.getElementById('template').value;
 
         const selectedTemplate = templateData[scenario].find(t => t.id === templateId);
         
         if (selectedTemplate) {
-            const finalMessage = selectedTemplate.text.replace(/{members}/g, members);
+            let finalMessage = selectedTemplate.text;
+            
+            // 處理雙變數或單變數替換
+            if (scenario === 'on_task_assistant') {
+                finalMessage = finalMessage.replace(/{members1}/g, members1);
+                finalMessage = finalMessage.replace(/{members2}/g, members2);
+            } else {
+                finalMessage = finalMessage.replace(/{members}/g, members1);
+            }
+            
             document.getElementById('resultText').textContent = finalMessage;
         }
     }
