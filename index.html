@@ -142,6 +142,18 @@
         <input type="text" id="members3" placeholder="例如：宜婷營養師" value="">
     </div>
 
+    <!-- 欄位四 (僅在純量測提醒出現：預約地點選擇) -->
+    <div class="form-group" id="group-address1" style="display: none;">
+        <label id="label-address1" for="address1">3-4. 預約地點 (address1)</label>
+        <select id="address1">
+            <option value="taipei">台北 初日診所</option>
+            <option value="hsinchu">新竹 初日診所</option>
+            <option value="taichung">台中 真愛美學診所</option>
+            <option value="tainan">台南 中正耳鼻喉科診所</option>
+            <option value="kaohsiung">高雄 初日診所</option>
+        </select>
+    </div>
+
     <button class="btn" onclick="generateMessage()">✨ 生成訊息內容</button>
 
     <!-- 成果展示與複製 -->
@@ -153,6 +165,15 @@
 </div>
 
 <script>
+    // 預約地點對應資料：地點名稱 + 地址
+    const locationData = {
+        taipei:    { name: "台北初日診所",     address: "台北市中山區民生東路二段161號4樓（第一銀行樓上）" },
+        hsinchu:   { name: "新竹初日診所",     address: "新竹市東區占梅路16號" },
+        taichung:  { name: "台中真愛美學診所", address: "台中市西區精誠路260號" },
+        tainan:    { name: "台南中正耳鼻喉科診所", address: "台南市永康區正強街231號" },
+        kaohsiung: { name: "高雄初日診所",     address: "高雄市左營區自由二路220號" }
+    };
+
     // 定義所有情境與模板資料
     const templateData = {
         dietitian_match: [
@@ -198,8 +219,8 @@
             { 
                 id: "ar3", 
                 name: "【量測提醒】", 
-             text: "{members1} 好~\n\n🔖純量測提醒\n姓名：\n預約時間：\n預約地點：\n地址："
-                 }
+                text: "{members1} 好~\n\n🔖純量測提醒\n姓名：{members1}\n預約時間：\n預約地點：{address1}\n地址：{address1_detail}"
+            }
         ],
         ask_course_guidance_time: [
             {
@@ -274,12 +295,14 @@
         
         const group2 = document.getElementById('group-members2');
         const group3 = document.getElementById('group-members3');
+        const group4 = document.getElementById('group-address1');
         
         const input2 = document.getElementById('members2');
 
-        // 狀態重置：預設隱藏欄位二與欄位三
+        // 狀態重置：預設隱藏欄位二、三、四
         group2.style.display = 'none';
         group3.style.display = 'none';
+        group4.style.display = 'none';
         label1.textContent = "3-1. 參與人員 / 網紅 / 客戶姓名";
 
         // 分支判斷
@@ -295,6 +318,10 @@
             input2.placeholder = "例如：陳大明";
             group2.style.display = 'block';
             group3.style.display = 'block';
+            
+        } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar3') {
+            label1.textContent = "3-1. 網紅 / 客戶姓名 (members1)";
+            group4.style.display = 'block';
         }
     }
 
@@ -319,6 +346,12 @@
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
                 finalMessage = finalMessage.replace(/{members3}/g, members3);
+            } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar3') {
+                const addressKey = document.getElementById('address1').value;
+                const location = locationData[addressKey];
+                finalMessage = finalMessage.replace(/{members1}/g, members1);
+                finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
+                finalMessage = finalMessage.replace(/{address1}/g, location.name);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
             }
