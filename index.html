@@ -219,7 +219,7 @@
             { 
                 id: "ar3", 
                 name: "【量測提醒】", 
-                text: "{members1} 好~\n\n🔖純量測提醒\n姓名：{members1}\n預約時間：\n預約地點：{address1}\n地址：{address1_detail}"
+                text: "{members1} 好~\n\n🔖純量測提醒\n姓名：{members2}\n預約時間：\n預約地點：{address1}\n地址：{address1_detail}"
             }
         ],
         ask_course_guidance_time: [
@@ -320,7 +320,10 @@
             group3.style.display = 'block';
             
         } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar3') {
-            label1.textContent = "3-1. 網紅 / 客戶姓名 (members1)";
+            label1.textContent = "3-1. 網紅 / 客戶稱呼 (members1)";
+            label2.textContent = "3-2. 網紅本名 (members2)";
+            input2.placeholder = "例如：陳大明";
+            group2.style.display = 'block';
             group4.style.display = 'block';
         }
     }
@@ -350,6 +353,7 @@
                 const addressKey = document.getElementById('address1').value;
                 const location = locationData[addressKey];
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
+                finalMessage = finalMessage.replace(/{members2}/g, members2);
                 finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
                 finalMessage = finalMessage.replace(/{address1}/g, location.name);
             } else {
