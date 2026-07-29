@@ -165,13 +165,13 @@
 </div>
 
 <script>
-    // 預約地點對應資料：地點名稱 + 地址
+    // 預約地點對應資料：地點名稱 + 地址 + Google地圖連結
     const locationData = {
-        taipei:    { name: "台北初日診所",     address: "台北市中山區民生東路二段161號4樓（第一銀行樓上）" },
-        hsinchu:   { name: "新竹初日診所",     address: "新竹市東區占梅路16號" },
-        taichung:  { name: "台中真愛美學診所", address: "台中市西區精誠路260號" },
-        tainan:    { name: "台南中正耳鼻喉科診所", address: "台南市永康區正強街231號" },
-        kaohsiung: { name: "高雄初日診所",     address: "高雄市左營區自由二路220號" }
+        taipei:    { name: "台北初日診所",     address: "台北市中山區民生東路二段161號4樓（第一銀行樓上）", mapUrl: "https://maps.app.goo.gl/fh4mJ2hXU6CDWHjg6" },
+        hsinchu:   { name: "新竹初日診所",     address: "新竹市東區占梅路16號", mapUrl: "https://maps.app.goo.gl/mRD6BKaKe6gTzoeM7" },
+        taichung:  { name: "台中真愛美學診所", address: "台中市西區精誠路260號", mapUrl: "https://maps.app.goo.gl/iLpjuWx8vJkSVAUh8" },
+        tainan:    { name: "台南中正耳鼻喉科診所", address: "台南市永康區正強街231號", mapUrl: "https://maps.app.goo.gl/5NyhzhN2qNJ2GPKB9" },
+        kaohsiung: { name: "高雄初日診所",     address: "高雄市左營區自由二路220號", mapUrl: "https://maps.app.goo.gl/xMDiuAvCEVbrM3x96" }
     };
 
     // 定義所有情境與模板資料
@@ -219,7 +219,7 @@
             { 
                 id: "ar3", 
                 name: "【量測提醒】", 
-                text: "{members1} 好~\n\n🔖純量測提醒\n姓名：{members2}\n預約時間：\n預約地點：{address1}\n地址：{address1_detail}\nGoogle地圖："
+                text: "{members1} 好~\n\n🔖純量測提醒\n姓名：{members2}\n預約時間：\n預約地點：{address1}\n地址：{address1_detail}\nGoogle地圖：{address1_map}"
             }
         ],
         ask_course_guidance_time: [
@@ -365,6 +365,7 @@
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
                 finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
+                finalMessage = finalMessage.replace(/{address1_map}/g, location.mapUrl);
                 finalMessage = finalMessage.replace(/{address1}/g, location.name);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
