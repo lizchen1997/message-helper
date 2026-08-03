@@ -210,7 +210,7 @@
             { 
                 id: "ar1", 
                 name: "【實體1v1提醒】", 
-                text: "{members1} 好~ \n\n🔖一對一提醒\n姓名：{members2}\n時間：\n營養師：{members3}\n地點：台北初日\n地址：台北市中山區民生東路二段161號4樓\n(行天宮捷運一號出口，第一銀行樓上)，請在4樓櫃檯報到喔！" 
+                text: "{members1} 好~ \n\n🔖一對一提醒\n姓名：{members2}\n時間：\n營養師：{members3}\n地點：台北初日\n地址：台北市中山區民生東路二段161號4樓\n(行天宮捷運一號出口，第一銀行樓上)" 
             },
             { 
                 id: "ar2", 
@@ -330,7 +330,7 @@
             input2.placeholder = "例如：小美";
             group2.style.display = 'block';
             
-        } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar2') {
+        } else if (scenario === 'appointment_reservation_1v1' && (templateId === 'ar1' || templateId === 'ar2')) {
             label1.textContent = "3-1. 網紅名稱 (members1)";
             label2.textContent = "3-2. 網紅本名 (members2)";
             input2.placeholder = "例如：陳大明";
@@ -363,7 +363,7 @@
             if (scenario === 'on_task_assistant') {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
-            } else if (scenario === 'appointment_reservation_1v1' && templateId === 'ar2') {
+            } else if (scenario === 'appointment_reservation_1v1' && (templateId === 'ar1' || templateId === 'ar2')) {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
                 finalMessage = finalMessage.replace(/{members3}/g, members3);
