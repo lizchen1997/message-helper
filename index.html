@@ -375,6 +375,8 @@
                 finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
                 finalMessage = finalMessage.replace(/{address1_map}/g, location.mapUrl);
                 finalMessage = finalMessage.replace(/{address1}/g, location.name);
+            } else if (scenario === 'work_reminder') {
+                finalMessage = finalMessage.replace(/{members1}/g, members1);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
             }
