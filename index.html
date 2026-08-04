@@ -110,13 +110,14 @@
             <option value="appointment_reservation_1v1">給網紅的時間提醒</option>
             <option value="ask_course_guidance_time">詢問期中課程指導時間</option>
             <option value="on_task_assistant">on task給助理</option>
-             <option value="work_reminder">進班提醒</option>
+            <option value="work_reminder">進班提醒</option>
+            <option value="remind_app">提醒網紅看APP</option>
         </select>
     </div>
 
-    <!-- 3. 選擇訊息語氣/模板 -->
+    <!-- 2. 選擇訊息語氣/模板 -->
     <div class="form-group">
-        <label for="template">2. 選擇訊息模板</label>
+        <label for="template" id="label-template">2. 選擇訊息模板</label>
         <select id="template" onchange="toggleInputFields()">
             <!-- 這裡會根據情境動態更新 -->
         </select>
@@ -251,7 +252,7 @@
                 name: "【問卷填寫】",
                 text: "{members} 好~\n這邊提供營養師分析前的執行事項，再麻煩一對一分析前按照以下步驟完成，謝謝！\n\n【步驟1】\n🏷️下載 Cofit App『Cofit - 我的專屬營養師』\nApple: https://tinyurl.com/28ta4b6z\n安卓: https://goo.gl/uM0y4v\n⚠️提醒：為確保資料一致，登入APP與填寫問卷時，請使用先前提供的手機號碼，並於相關作業中皆使用同一門號。\n\n【步驟2】\n🏷️完成 Cofit APP 下載後，請填寫 2 份問卷唷！\n1️⃣飲食及生活習慣問卷：https://hi.cofit.me/6GU5p\n2️⃣六大荷爾蒙體質分析問卷：https://hi.cofit.me/fl97W\n- 請使用本人的手機號碼登入問卷系統，且不得與他人共用號碼\n- 請盡量以「真實姓名」填寫，若以其他姓名填寫也請主動跟我們說，避免營養師核對不到資料無法為您分析喔！\n- 完成問卷後請確認「提交」並務必回來跟我說，以利營養師核對唷！\n\n【步驟3】\n🏷️2 日自主飲食紀錄\n請上傳個人飲食照片至 Cofit App。 一對一分析時，營養師將會透過 App 檢視您的 2 日飲食唷！\n飲食記錄請上傳至「日記」頁面，教學影片 https://youtube.com/shorts/xDKhdt7lGyg\n⚠️小提醒：飲食記錄請上傳至「日記」頁面，不是跟營養師的對話裡喔！"
             },
-             {
+            {
                 id: "pw2",
                 name: "【預約量測(線上一對一分析前都需要)】",
                 text: "{members} 好~\n營養師在與您一對一分析前，需要先了解您目前的身體數據。\n請問家裡或是否有配合的健身房可以量測體脂率呢？\n如果沒有的話，在您的居住地附近我們有配合的據點，可以進行量測喔～"
@@ -263,25 +264,31 @@
                 name: "進團班",
                 text: "【 KOL {members1} _進團班】 麻煩 {members2}，謝謝！\n進班資訊網址："
             },
-             {
+            {
                 id: "ota2",
                 name: "勞報單點點簽",
                 text: "【KOL {members1}_勞報單點點簽】麻煩 {members2}，謝謝！\nEmail：\n勞報單："
             },
-              {
+            {
                 id: "ota3",
                 name: "後補保健品和大禮包",
                 text: "【KOL {members1}_課程保健品和大禮包寄送】麻煩 {members2}，謝謝！\n連結："
             }
-         
         ],
         work_reminder: [
-         {
-             id: "wr1",
-                name: "進班第一天",
+            {
+                id: "wr1",
+                name: "【進班第一天】",
                 text: " 嗨嗨！{members1} ~\n今天就是我們進班日囉～\n\n這邊想說明與提醒一些事項：\n\n(1)在課程剛開始階段，提醒你可以先做一個身型、體重計、腰圍的照相紀錄，之後請『每週一』空腹量測身體數據(依家中可行工具為主即可)，方便營養師做追蹤～後續我們再討論是否要發佈唷！\n✏️數據上傳方式：點選『我的』➡️點『數據記錄』➡️右上角『＋號』\n(2)進班後開始吃的每一餐都要上傳唷，忘記拍照也沒關係可以先用文字說明哦，請聽營養師的建議去改善，才能看見成效💪若過程中有任何不適，歡迎隨時跟我們說！\n(3)在APP底下專家那裡，你會被加進2個群組\n🧑‍🧑‍🧒‍🧒大群：大約會十幾個人，大家在群組裡聊天互動，助教會分享飲食相關內容哦，可以點進去觀看，對減重滿有幫助的！\n👤私群：裡面會有營養師和PM們，營養師主要用這個群組溝通！有任何私人狀況或飲食問題等等都可以在那裡詢問喔～\n(4)在班級群裡，我們會不定期舉辦免費的線上直播，如果有想要參加，記得留意報名與直播日期，避免錯過囉！\n如果真的不小心錯過也別擔心，助教會在群裡發布相似內容的文章，一樣可以參考～\n(5)最後附上Brief給你參考：https://docs.google.com/presentation/d/1K6todHlp9Sm02GcwBQnv6FHQm-pQNitfZEmsLgUpO8Y/edit?usp=sharing\n請特別留意P6~8注意事項、P.12 文字位置示範，減少製作過程的來回唷！\n\n接下來再麻煩您配合營養師，一起變健康🤩！！"
-              }
-         ]
+            }
+        ],
+        remind_app: [
+            {
+                id: "ra1",
+                name: "【提醒看APP專家群】",
+                text: "{members1}好~ \n營養師會在APP中的專家群給您一些客製化的建議\n再記得有空的時候查看喔"
+            }
+        ]
     };
 
     // 初始化與更新模板下拉選單
@@ -344,6 +351,9 @@
             input2.placeholder = "例如：陳大明";
             group2.style.display = 'block';
             group4.style.display = 'block';
+
+        } else if (scenario === 'work_reminder' || scenario === 'remind_app') {
+            label1.textContent = "3-1. 網紅姓名 (members1)";
         }
     }
 
@@ -376,7 +386,7 @@
                 finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
                 finalMessage = finalMessage.replace(/{address1_map}/g, location.mapUrl);
                 finalMessage = finalMessage.replace(/{address1}/g, location.name);
-            } else if (scenario === 'work_reminder') {
+            } else if (scenario === 'work_reminder' || scenario === 'remind_app') {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
