@@ -112,6 +112,7 @@
             <option value="on_task_assistant">on task給助理</option>
             <option value="work_reminder">進班提醒</option>
             <option value="remind_app">提醒網紅看APP</option>
+            <option value="sign_contract">提醒網紅簽合約</option>
         </select>
     </div>
 
@@ -288,6 +289,13 @@
                 name: "【提醒看APP專家群】",
                 text: "{members1}好~ \n營養師會在APP中的專家群給您一些客製化的建議\n再記得有空的時候查看喔"
             }
+        ],
+        sign_contract: [
+            {
+                id: "sc1",
+                name: "【合約回簽提醒】",
+                text: "{members1} 好~ \n合約已用印完成，已發送給您囉，再請查收並回簽了，謝謝！\n\n提醒簽署合約時填寫的收款帳戶資訊，須與後續請款時提供的勞務報酬單或發票資料完全一致。\n\n如資料不一致，將可能影響款項核對及付款時程，請務必確認後再送出喔~"
+            }
         ]
     };
 
@@ -352,7 +360,7 @@
             group2.style.display = 'block';
             group4.style.display = 'block';
 
-        } else if (scenario === 'work_reminder' || scenario === 'remind_app') {
+        } else if (scenario === 'work_reminder' || scenario === 'remind_app' || scenario === 'sign_contract') {
             label1.textContent = "3-1. 網紅姓名 (members1)";
         }
     }
@@ -386,7 +394,7 @@
                 finalMessage = finalMessage.replace(/{address1_detail}/g, location.address);
                 finalMessage = finalMessage.replace(/{address1_map}/g, location.mapUrl);
                 finalMessage = finalMessage.replace(/{address1}/g, location.name);
-            } else if (scenario === 'work_reminder' || scenario === 'remind_app') {
+            } else if (scenario === 'work_reminder' || scenario === 'remind_app' || scenario === 'sign_contract') {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
             } else {
                 finalMessage = finalMessage.replace(/{members}/g, members1);
