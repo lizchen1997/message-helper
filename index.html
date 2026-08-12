@@ -139,6 +139,22 @@
         <input type="text" id="members2" placeholder="" value="">
     </div>
 
+    <!-- 新增：分析營養師下拉選單 -->
+    <div class="form-group" id="group-analysis-dietitian" style="display: none;">
+        <label for="analysis_dietitian">分析營養師</label>
+        <select id="analysis_dietitian">
+            <!-- 動態填入營養師選項 -->
+        </select>
+    </div>
+
+    <!-- 新增：帶班營養師下拉選單 -->
+    <div class="form-group" id="group-duty-dietitian" style="display: none;">
+        <label for="duty_dietitian">帶班營養師</label>
+        <select id="duty_dietitian">
+            <!-- 動態填入營養師選項 -->
+        </select>
+    </div>
+
     <!-- 欄位三 (僅在線上1v1提醒出現：營養師名稱) -->
     <div class="form-group" id="group-members3" style="display: none;">
         <label id="label-members3" for="members3">3-3. 營養師名稱 (members3)</label>
@@ -168,6 +184,15 @@
 </div>
 
 <script>
+    // 營養師選單名單 (可以自行在此新增或更換營養師名字)
+    const dietitians = [
+        "宜婷營養師",
+        "立慈營養師",
+        "Ellie營養師",
+        "張營養師",
+        "李營養師"
+    ];
+
     // 預約地點對應資料：地點名稱 + 地址 + Google地圖連結
     const locationData = {
         taipei:    { name: "台北初日診所",     address: "台北市中山區民生東路二段161號4樓（第一銀行樓上），請在4樓櫃檯報到喔！", mapUrl: "https://maps.app.goo.gl/fh4mJ2hXU6CDWHjg6" },
@@ -191,21 +216,21 @@
                 text: "{members} 好~\n\n我們將安排營養師進行一對一分析以及合約製作\n請您提供以下資訊，以便我們進行後續的作業：\n• 本名：\n• 國外手機號碼：\n⚠️請提供本人使用的手機號碼，後續資料將綁定此門號，請於問卷及 APP 登入使用相同號碼。\n• 本人常用 Email（系統通知使用）：\n• 合約收件 Email（如同上可免填）：\n•勞報/開立發票（如開發票請提供公司名）：\n\n以上再麻煩了，感謝!" 
             }
         ],
-        ask_time: [
+       ask_time: [
             { 
                 id: "at1", 
                 name: "【營養師實體時間】", 
-                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n請問x/x ~ x/x 前是否有可以現場一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n可預約時段：如 x/xx  14:00-17:00 (結束時間)💕\n\n需避開時段：\n\n特殊需求 (如完全不可遲到、許願哪日優先安排)：" 
+                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n\n此位網紅分析營養師：{analysis_dietitian}\n帶班營養師：{duty_dietitian}\n\n請問x/x ~ x/x 是否有可以現場一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n可預約時段：如 x/xx  14:00-17:00 (結束時間)💕\n\n需避開時段：\n\n特殊需求 (如完全不可遲到、許願哪日優先安排)：" 
             },
             { 
                 id: "at2", 
                 name: "【營養師線上時間】", 
-                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n請問x/x ~ x/x 前是否有可以線上一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n*可預約時段：例如 x/xx  14:00-17:00 (結束時間)💕\n\n*需避開時段：\n\n*特殊需求 (如完全不可遲到、許願哪日優先安排)：" 
+                text: "{members} 好~ \n我是立慈~~\n之後會和Ellie一起協助配對營養師和追蹤體驗流程喔！\n\n此位網紅分析營養師：{analysis_dietitian}\n帶班營養師：{duty_dietitian}\n\n請問x/x ~ x/x 是否有可以線上一對一分析的時間呢？\n建議營養師可安排我們的預約與下一個預約有10分鐘緩衝，讓你也可以歇口氣～😮‍💨\n\n*可預約時段：例如 x/xx  14:00-17:00 (結束時間)💕\n\n*需避開時段：\n\n*特殊需求 (如完全不可遲到、許願哪日優先安排)：" 
             },
             { 
                 id: "at3", 
                 name: "【約網紅一對一分析時間】", 
-                text: "{members} 您好~ \n營養師已提供一對一體態與飲食分析的時間了!\n服務包含：\n1.專業身體組成量測\n2.身體數據評估、飲食習慣檢視以及荷爾蒙體質評測。\n\n時間約 30 分鐘/人\n但建議還是可以多預留一些時間比較好😊\n時段如下：\n\n\n請問哪個時段方便呢？" 
+                text: "{members} 您好~ \n營養師已提供一對一體態與飲食分析的時間了!\n服務包含：\n1.專業身體組成量測\n2.身體數據評估、飲食習慣檢視以及荷爾蒙體質評測。\n\n分析營養師：{analysis_dietitian}\n帶班營養師：{duty_dietitian}\n\n時間約 30 分鐘/人\n但建議還是可以多預留一些時間比較好😊\n時段如下：\n\n\n請問哪個時段方便呢？" 
             }
         ],
         appointment_reservation_1v1: [
@@ -299,6 +324,27 @@
         ]
     };
 
+    // 初始化營養師下拉選單
+    function initDietitianOptions() {
+        const analysisSelect = document.getElementById('analysis_dietitian');
+        const dutySelect = document.getElementById('duty_dietitian');
+        
+        analysisSelect.innerHTML = '';
+        dutySelect.innerHTML = '';
+
+        dietitians.forEach(d => {
+            const opt1 = document.createElement('option');
+            opt1.value = d;
+            opt1.textContent = d;
+            analysisSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = d;
+            opt2.textContent = d;
+            dutySelect.appendChild(opt2);
+        });
+    }
+
     // 初始化與更新模板下拉選單
     function updateTemplates() {
         const scenario = document.getElementById('scenario').value;
@@ -330,17 +376,26 @@
         const group2 = document.getElementById('group-members2');
         const group3 = document.getElementById('group-members3');
         const group4 = document.getElementById('group-address1');
+        const groupAnalysis = document.getElementById('group-analysis-dietitian');
+        const groupDuty = document.getElementById('group-duty-dietitian');
         
         const input2 = document.getElementById('members2');
 
-        // 狀態重置：預設隱藏欄位二、三、四
+        // 狀態重置：預設隱藏額外欄位
         group2.style.display = 'none';
         group3.style.display = 'none';
         group4.style.display = 'none';
+        groupAnalysis.style.display = 'none';
+        groupDuty.style.display = 'none';
+        
         label1.textContent = "3-1. 參與人員 / 網紅 / 客戶姓名";
 
         // 分支判斷
-        if (scenario === 'on_task_assistant') {
+        if (scenario === 'ask_time') {
+            // 當情境為「詢問一對一分析時間」時顯示兩個營養師選單
+            groupAnalysis.style.display = 'block';
+            groupDuty.style.display = 'block';
+        } else if (scenario === 'on_task_assistant') {
             label1.textContent = "3-1. 網紅 / 營養師姓名 (members1)";
             label2.textContent = "3-2. 助理姓名 (members2)";
             input2.placeholder = "例如：小美";
@@ -374,12 +429,19 @@
         const members2 = document.getElementById('members2').value || "xxx";
         const members3 = document.getElementById('members3').value || "xxx";
 
+        const analysisDietitian = document.getElementById('analysis_dietitian').value;
+        const dutyDietitian = document.getElementById('duty_dietitian').value;
+
         const selectedTemplate = templateData[scenario].find(t => t.id === templateId);
         
         if (selectedTemplate) {
             let finalMessage = selectedTemplate.text;
             
-            if (scenario === 'on_task_assistant') {
+            if (scenario === 'ask_time') {
+                finalMessage = finalMessage.replace(/{members}/g, members1);
+                finalMessage = finalMessage.replace(/{analysis_dietitian}/g, analysisDietitian);
+                finalMessage = finalMessage.replace(/{duty_dietitian}/g, dutyDietitian);
+            } else if (scenario === 'on_task_assistant') {
                 finalMessage = finalMessage.replace(/{members1}/g, members1);
                 finalMessage = finalMessage.replace(/{members2}/g, members2);
             } else if (scenario === 'appointment_reservation_1v1' && (templateId === 'ar1' || templateId === 'ar2')) {
@@ -414,7 +476,8 @@
         });
     }
 
-    // 網頁載入時先執行一次初始化
+    // 網頁載入時執行初始化
+    initDietitianOptions();
     updateTemplates();
 </script>
 
